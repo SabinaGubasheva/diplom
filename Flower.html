@@ -101,7 +101,7 @@
       }
       #window {
         width: 100%;
-        height: 270px;
+        height: 150px;
         background: rgb(167, 201, 87);
         font-size: 1.2rem;
         color: #f2f0ea;
@@ -137,7 +137,7 @@
       }
       #changeBox {
         width: 100%;
-        height: 200px;
+        height: 250px;
         position: relative;
         margin-top: 3rem;
         background-color: rgb(56, 102, 65, 0.65);
@@ -157,6 +157,7 @@
     </style>
   </head>
   <body>
+    <!-- Кнопки с выбором позиций -->
     <div class="container mt-4">
       <h5><b class="keywords">Из какого количества роз, соберем букет?</b></h5>
       <div class="row">
@@ -182,6 +183,7 @@
             <span>из 101 розы 5000 руб</span>
           </div>
         </div>
+        <!-- Экран со статусом и терминал для приема денег -->
         <div class="col-md-6">
           <input type="hidden" id="money" />
           <div class="row">
@@ -191,33 +193,31 @@
                 <p id="displayInfo">Внесите деньги</p>
                 <div class="progress" hidden>
                   <div class="progress-bar progress-bar-striped progress-bar-animated"></div>
-                  
                 </div>
               </div>
               <br>
               <img src="img/bill_acc.png" alt="" />
             </div>
+            <!-- Окно для выбора цвета -->
             <div class="col-md-6">
-              
               <div id="window">
                 <p id="displayInfo">Выберите цвет букета</p>
-                <img src="img/red.png" onclick="getFlower('Красная')" id="#" />
-                <img src="img/pink.png" onclick="getFlower('Розовая')" />
-                <img src="img/white.png" onclick="getFlower('Белая')" />
-                <img src="img/yellow.png" onclick="getFlower('Желтая')" />
+                <button class="btn btn-outline-light btn-sm"><img src="img/red.png" onclick="color(0, 'красная')" id="red" /></button>
+                <button class="btn btn-outline-light btn-sm"><img src="img/pink.png" onclick="color(0, 'розовая')" id="pink" /></button>
+                <button class="btn btn-outline-light btn-sm"><img src="img/white.png" onclick="color(0, 'белая')" id="white" /></button>
+                <button class="btn btn-outline-light btn-sm"><img src="img/yellow.png" onclick="color(0, 'желтая')" id="yellow" /></button>
               </div>
-
-              <button
-              class="btn btn-success btn-block btn-lg mt-5"
-              onclick="getChange(money.value)"
-            >
-              заберите Сдачу и Букет
+              <!-- Кнопка сдачи и выдачи товара -->
+              <button class="btn btn-success btn-block btn-lg mt-5" onclick="getChange(money.value)" >
+              ЗАБЕРИТЕ СДАЧУ И БУКЕТ
             </button>
+              <!-- Купюроприемник -->
               <div id="changeBox"></div>
             </div>
           </div>
         </div>
       </div>
+        <!-- Купюры -->
       <div class="d-flex flex-wrap justify-content-around mt-3">
         <img src="img/1000_rub.jpeg" alt="" data-bill-value="1000" id="test" />
         <img src="img/1000_rub.jpeg" alt="" data-bill-value="1000" />
@@ -255,11 +255,8 @@
             let billAccTop = billAcc.getBoundingClientRect().top;
             let billAccLeft = billAcc.getBoundingClientRect().left;
             let billAccRight = billAcc.getBoundingClientRect().right;
-            let billAccBottom =
-              billAcc.getBoundingClientRect().bottom -
-              (billAcc.getBoundingClientRect().height / 3) * 2 -
-              25;
-
+            let billAccBottom = billAcc.getBoundingClientRect().bottom -
+              (billAcc.getBoundingClientRect().height / 3) * 2 - 25;
             if (
               billTop > billAccTop &&
               billLeft > billAccLeft &&
@@ -288,22 +285,25 @@
           };
         };
       }
-
+      
+      // Функция пополнения и отображения баланса
       function getFlower(price, name) {
         if (money.value >= price) {
           money.value = money.value - price;
           balance.innerHTML = `<i class="fa-solid fa-piggy-bank fa-beat"></i> Баланс: ${money.value} руб.`;
           startProgressBar(name);
         } else {
-          displayInfo.innerHTML = "У вас не хватает денег на " + name;
+          displayInfo.innerHTML = "У вас не хватает денег на " + name ;
         }
       }
+      
+      
       function startProgressBar(flowerName) {
         let i = 0;
         let progressBar = document.querySelector(".progress-bar");
         progressBar.parentElement.hidden = false;
-        displayInfo.innerHTML = `<i class="fa-solid fa-hourglass-half fa-spin"></i> Оформляем букет...`;
-
+        displayInfo.innerHTML = `<i class="fa-solid fa-hourglass-half fa-spin"></i> Выберите цвет букета ->`;
+       
         function progress() {
           i++;
           progressBar.style.width = i + "%";
@@ -335,11 +335,20 @@
         if (num - coin !== 0) {
           getChange(num - coin);
         }
-      }
+      
 
-      function getRandom(min, max) {
-        return Math.random() * (max - min) + min;
-      }
+        // function getColor() {
+        //   if (onclick = red) color = red;
+        // else if (onclick = yelow) color = yelow;
+        // else if (onclick = white) color = white;
+        // else if (onclick = pink) color = pink;
+        // }
+        // console.log(color);
+        // changeBox.innerHTML += `<img src="img/${color}.jpg" style="top: ${top}px; left: ${left}px">`;
+        // if (onclick - color !== 0) {
+        //   getChange(onclick - color);
+        // }
+      
 
       function ternGetChange(num) {
         let coin = num >= 500 ? 500 : num >= 200 ? 200 : num >= 100 ? 100 : num >= 50 ? 50 : "Вся сдача выдана";
@@ -362,6 +371,12 @@
           getChange(num - 50);
         }
       }
+
+    }
+
+function getRandom(min, max) {
+  return Math.random() * (max - min) + min;
+}
 
       // for(let i = 0; i < bills.length; i++) {
       //   bills[i].onmousedown = function() {
