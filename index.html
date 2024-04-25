@@ -1,1 +1,390 @@
-!
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+      integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://kit.fontawesome.com/dc4f8560f3.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="/favicon.ico" />
+    <title>Flower</title>
+    <style>
+      /* --hunter-green: #386641ff;
+           --asparagus: #6a994eff;
+           --yellow-green: #a7c957ff;
+           --parchment: #f2e8cfff;
+           --  bittersweet-shimmer: #bc4749ff; */
+      body {
+        font-family: "Ubuntu", sans-serif;
+        background: url('img/flo.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+      input {
+        padding: 0.5rem;
+        font-size: 1.2rem;
+      }
+      .flower_block {
+        background-color: rgb(167, 201, 87);
+        border: 1px solid gray;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+        filter: drop-shadow(#386641 6px 6px 4px);
+      }
+      .flower_btn {
+        width: 0;
+        height: 0;
+        border-top: 50px solid transparent;
+        border-left: 50px solid #bc4749;
+        border-bottom: 50px solid transparent;
+        filter: drop-shadow(#386641 3px 3px 4px);
+      }
+      .flower_btn:hover {
+        cursor: pointer;
+        width: 0;
+        height: 0;
+        border-top: 50px solid transparent;
+        border-left: 70px solid hsl(359, 47%, 31%);
+        border-bottom: 50px solid transparent;
+        position: relative;
+        left: 4px;
+      }
+      .keywords {
+        font-style: normal;
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: hsl(359, 47%, 31%)
+        ;
+      }
+      .flower_block span {
+        font-size: 1.8rem;
+        font-weight: 700;
+        line-height: 100px;
+        vertical-align: middle;
+        margin-left: 1rem;
+        color: hsl(359, 47%, 31%);
+      }
+      #display {
+        width: 80%;
+        height: 230px;
+        background: linear-gradient(
+          to bottom,
+          rgb(106, 153, 78),
+          rgba(112, 155, 78, 0.9) 10.281%,
+          rgba(131, 159, 77, 0.85) 20.324%,
+          rgba(163, 165, 75, 0.75) 30.188%,
+          rgba(173, 138, 73, 0.68) 39.933%,
+          rgba(181, 96, 70, 0.6) 49.619%,
+          rgba(190, 66, 88, 0.35) 59.304%,
+          rgba(198, 62, 138, 0.4) 69.05%,
+          rgba(204, 58, 185, 0.3) 78.914%,
+          rgba(196, 55, 208, 0.35) 88.957%,
+          rgba(185, 54, 210, 0.15) 99.238%
+        );
+        font-size: 1.2rem;
+        color: #f2f0ea;
+        border: solid 2px hsl(359, 47%, 31%);
+        text-align: center;
+        padding: 10px;
+      }
+      #window {
+        width: 100%;
+        height: 270px;
+        background: rgb(167, 201, 87);
+        font-size: 1.2rem;
+        color: #f2f0ea;
+        border: solid 2px hsl(359, 47%, 31%);
+        text-align: center;
+        padding: 10px;
+      }
+      img[src$="rub.jpg"] {
+        cursor: pointer;
+        padding-top: 8px;
+      }
+      img[src$="rub.jpg"]:hover {
+        filter: contrast(150%);
+      }
+      .animated {
+        animation-name: hide-bill;
+        animation-duration: 0.3s;
+        animation-timing-function: ease-out;
+      }
+
+      @keyframes hide-bill {
+        0% {
+          opacity: 1;
+          transform: rotate(-90deg) rotateY(20deg);
+        }
+        50% {
+          transform: rotate(-90deg) skewY(45);
+        }
+        100% {
+          opacity: 0;
+          transform: rotate(-90deg) rotateY(90deg);
+        }
+      }
+      #changeBox {
+        width: 100%;
+        height: 200px;
+        position: relative;
+        margin-top: 3rem;
+        background-color: rgb(56, 102, 65, 0.65);
+        border: 2px solid hsl(359, 47%, 31%);
+      }
+      img[src$="rub.png"] {
+        width: 60px;
+        position: absolute;
+      }
+      .progress-bar {
+        background-color: #bc4749;
+      }
+      .progress {
+        margin-top: 5rem;
+        height: 1.3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-4">
+      <h5><b class="keywords">Из какого количества роз, соберем букет?</b></h5>
+      <div class="row">
+        <div class="col-md-5">
+          <div class="row flower_block">
+            <div class="flower_btn" onclick="getFlower(1000, 'Букет из 15 роз')"></div>
+            <span>из 15 роз 1000 руб</span>
+          </div>
+          <div class="row flower_block">
+            <div class="flower_btn" onclick="getFlower(2000, 'Букет из 25 роз')"></div>
+            <span>из 25 роз 2000 руб</span>
+          </div>
+          <div class="row flower_block">
+            <div class="flower_btn" onclick="getFlower(3000, 'Букет из 31 розы')"></div>
+            <span>из 31 розы 3000 руб</span>
+          </div>
+          <div class="row flower_block">
+            <div class="flower_btn" onclick="getFlower(4000, 'Букет из 51 розы')"></div>
+            <span>из 51 розы 4000 руб</span>
+          </div>
+          <div class="row flower_block">
+            <div class="flower_btn" onclick="getFlower(5000, 'Букет из 101 розы')"></div>
+            <span>из 101 розы 5000 руб</span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <input type="hidden" id="money" />
+          <div class="row">
+            <div class="col-md-6">
+              <div id="display">
+                <p id="balance"><i class="fa-solid fa-piggy-bank fa-beat"></i> Баланс: 0 руб.</p>
+                <p id="displayInfo">Внесите деньги</p>
+                <div class="progress" hidden>
+                  <div class="progress-bar progress-bar-striped progress-bar-animated"></div>
+                  
+                </div>
+              </div>
+              <br>
+              <img src="img/bill_acc.png" alt="" />
+            </div>
+            <div class="col-md-6">
+              
+              <div id="window">
+                <p id="displayInfo">Выберите цвет букета</p>
+                <img src="img/red.png" onclick="getFlower('Красная')" id="#" />
+                <img src="img/pink.png" onclick="getFlower('Розовая')" />
+                <img src="img/white.png" onclick="getFlower('Белая')" />
+                <img src="img/yellow.png" onclick="getFlower('Желтая')" />
+              </div>
+
+              <button
+              class="btn btn-success btn-block btn-lg mt-5"
+              onclick="getChange(money.value)"
+            >
+              заберите Сдачу и Букет
+            </button>
+              <div id="changeBox"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex flex-wrap justify-content-around mt-3">
+        <img src="img/1000_rub.jpeg" alt="" data-bill-value="1000" id="test" />
+        <img src="img/1000_rub.jpeg" alt="" data-bill-value="1000" />
+        <img src="img/2000_rub.jpeg" alt="" data-bill-value="2000" />
+        <img src="img/5000_rub.jpeg" alt="" data-bill-value="5000" />
+      </div>
+    </div>
+
+    <script>
+      let money = document.getElementById("money");
+      let displayInfo = document.getElementById("displayInfo");
+      let bills = document.querySelectorAll("img[src$='rub.jpeg']");
+      let billAcc = document.querySelector("img[src$='acc.png']");
+      let test = document.getElementById("test");
+      let balance = document.getElementById("balance");
+      let changeBox = document.getElementById("changeBox");
+
+      for (let bill of bills) {
+        bill.onmousedown = function (e) {
+          bill = e.currentTarget;
+          bill.style.position = "absolute";
+          bill.style.zIndex = 1000;
+          bill.style.transform = "rotate(90deg)";
+
+          document.addEventListener("mousemove", moveElement);
+
+          bill.onmouseup = function () {
+            document.removeEventListener("mousemove", moveElement);
+            bill.style.zIndex = 1;
+            //Координаты купюры
+            let billTop = bill.getBoundingClientRect().top;
+            let billLeft = bill.getBoundingClientRect().left;
+            let billRight = bill.getBoundingClientRect().right;
+            //Координаты купюроприемника
+            let billAccTop = billAcc.getBoundingClientRect().top;
+            let billAccLeft = billAcc.getBoundingClientRect().left;
+            let billAccRight = billAcc.getBoundingClientRect().right;
+            let billAccBottom =
+              billAcc.getBoundingClientRect().bottom -
+              (billAcc.getBoundingClientRect().height / 3) * 2 -
+              25;
+
+            if (
+              billTop > billAccTop &&
+              billLeft > billAccLeft &&
+              billRight < billAccRight &&
+              billTop < billAccBottom
+            ) {
+              bill.classList.add("animated");
+              setTimeout(function () {
+                bill.hidden = true;
+              }, 290);
+              money.value = +money.value + +bill.dataset.billValue;
+              balance.innerHTML = `<i class="fa-solid fa-piggy-bank fa-beat"></i> Баланс: ${money.value} руб.`;
+            }
+          };
+          // Функция передвижения купюры
+          function moveElement(event) {
+            let x = event.clientX - 150;
+            let y = event.clientY - 65;
+
+            bill.style.top = y + "px";
+            bill.style.left = x + "px";
+          }
+          // Отмена действия браузера по умолчанию
+          bill.ondragstart = function () {
+            return false;
+          };
+        };
+      }
+
+      function getFlower(price, name) {
+        if (money.value >= price) {
+          money.value = money.value - price;
+          balance.innerHTML = `<i class="fa-solid fa-piggy-bank fa-beat"></i> Баланс: ${money.value} руб.`;
+          startProgressBar(name);
+        } else {
+          displayInfo.innerHTML = "У вас не хватает денег на " + name;
+        }
+      }
+      function startProgressBar(flowerName) {
+        let i = 0;
+        let progressBar = document.querySelector(".progress-bar");
+        progressBar.parentElement.hidden = false;
+        displayInfo.innerHTML = `<i class="fa-solid fa-hourglass-half fa-spin"></i> Оформляем букет...`;
+
+        function progress() {
+          i++;
+          progressBar.style.width = i + "%";
+          progressBar.innerText = i + "%";
+          if (i == 100) {
+            clearInterval(timerId);
+            progressBar.parentElement.hidden = true;
+            displayInfo.innerHTML = "Ваш " + flowerName + " готов!";
+            progressBar.style.width = 0 + "%";
+          } else if (i == 50) {
+            displayInfo.innerHTML = `<i class="fa-solid fa-hourglass-hal fa-spin"></i> Ваш ${flowerName} почти готов...`;
+          }
+        }
+        let timerId = setInterval(progress, 100);
+      }
+
+      function getChange(num) {
+        let coin;
+        let top = getRandom(0, changeBox.getBoundingClientRect().height - 65);
+        let left = getRandom(0, changeBox.getBoundingClientRect().width - 65);
+
+        if (num >= 500) coin = 500;
+        else if (num >= 200) coin = 200;
+        else if (num >= 100) coin = 100;
+        else if (num >= 50) coin = 50;
+
+        console.log(coin);
+        changeBox.innerHTML += `<img src="img/${coin}rub.jpg" style="top: ${top}px; left: ${left}px">`;
+        if (num - coin !== 0) {
+          getChange(num - coin);
+        }
+      }
+
+      function getRandom(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      function ternGetChange(num) {
+        let coin = num >= 500 ? 500 : num >= 200 ? 200 : num >= 100 ? 100 : num >= 50 ? 50 : "Вся сдача выдана";
+        console.log(coin);
+        if (num - coin !== 0) ternGetChange(num - coin);
+      }
+
+      function oldGetChange(num) {
+        if (num >= 500) {
+          console.log(500);
+          getChange(num - 500);
+        } else if (num >= 200) {
+          console.log(200);
+          getChange(num - 200);
+        } else if (num >= 100) {
+          console.log(100);
+          getChange(num - 100);
+        } else if (num >= 50) {
+          console.log(50);
+          getChange(num - 50);
+        }
+      }
+
+      // for(let i = 0; i < bills.length; i++) {
+      //   bills[i].onmousedown = function() {
+      //     console.log("Произошло событие mousedown");
+      //   }
+      // }
+
+      // bills.forEach(function (bill) {
+      //   bill.onmousedown = function () {
+      //     console.log("Произошло событие mousedown");
+      //   };
+      // });
+    </script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
